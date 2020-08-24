@@ -1,0 +1,50 @@
+---
+title: "Test"
+author: "Michael Schmidt"
+date: "8/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+extrafont::loadfonts(device = "win")
+library(tidyverse)
+
+windowsFonts()
+
+tuesdata <- tidytuesdayR::tt_load(2020, week = 34)
+
+
+plants<-tuesdata$plants
+threates<-tuesdata$threats
+
+
+```
+
+```{r}
+options(device = "windows")
+theme_set(theme_schmidt()+
+            theme(
+              text=element_text(family="Work Sans Thin")
+            ))
+plants%>%
+  count(country)%>%
+  mutate(country=fct_reorder(country, n))%>%
+  filter(n>10)%>%
+  ggplot(aes(country, n))+
+  geom_col()+
+  coord_flip()+
+  labs(
+    title = "Exinct Plants by Country",
+    subtitle = "Year is good tst", 
+    caption = "@mschmidty | #tidytuesday | Data:IUCN Red List"
+  )
+
+
+```
+
+
